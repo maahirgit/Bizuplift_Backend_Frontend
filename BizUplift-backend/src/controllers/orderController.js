@@ -8,11 +8,16 @@ const User = require('../models/User');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+// Initialize Razorpay lazily to avoid crashing on startup if keys are not set
+const getRazorpay = () => {
+    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+        throw new Error('Razorpay keys are not configured');
+    }
+    return new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+};
 
 // Helper: add credits
 const awardCredits = async (userId, points, action) => {
@@ -124,6 +129,7 @@ const createRazorpayOrder = async (req, res, next) => {
             receipt: receipt || `receipt_${Date.now()}`,
         };
 
+        const razorpay = getRazorpay();
         const razorpayOrder = await razorpay.orders.create(options);
         res.json({ success: true, razorpayOrder });
     } catch (err) { next(err); }
