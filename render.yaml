@@ -17,7 +17,6 @@ services:
   - type: web
     name: bizuplift-frontend
     runtime: static
-    plan: free
     rootDir: BizUplift-main
     buildCommand: npm install && npm run build
     staticPublishPath: dist
