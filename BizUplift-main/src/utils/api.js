@@ -1,5 +1,6 @@
-// Use Vercel Backend URL if provided, otherwise fallback to local proxy
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+// Use Vercel/Render Backend URL if provided, otherwise fallback to local proxy
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
+export const BASE_URL = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
 
 /**
  * Standard fetch wrapper that automatically attaches the
