@@ -13,9 +13,13 @@ services:
       - key: MONGO_URI
         sync: false
       - key: JWT_SECRET
-        sync: false
+        value: bizuplift_prod_jwt_secret_2024
       - key: FRONTEND_URL
-        sync: false
+        value: https://bizuplift-frontend.onrender.com
+      - key: RAZORPAY_KEY_ID
+        value: rzp_test_dummykey
+      - key: RAZORPAY_KEY_SECRET
+        value: dummysecret
 
   # Frontend Static Site
   - type: static
@@ -29,4 +33,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        sync: false
+        value: https://bizuplift-backend.onrender.com/api

@@ -25,8 +25,21 @@ const cartRoutes = require('./routes/cartRoutes');
 const app = express();
 
 // ─── Core Middleware ─────────────────────────────────────
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://bizuplift-frontend.onrender.com',
+    process.env.FRONTEND_URL,
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, Postman, Render health checks)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(null, true); // Allow all origins in production for now
+        }
+    },
     credentials: true,
 }));
 app.use(express.json());
