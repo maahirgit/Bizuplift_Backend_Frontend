@@ -19,7 +19,7 @@ services:
         sync: false # Set in Render Dashboard (the URL of the static site)
 
   # Frontend Static Site
-  - type: static
+  - type: static_site
     name: bizuplift-frontend
     env: static
     rootDir: BizUplift-main
