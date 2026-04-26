@@ -4,7 +4,7 @@
   "description": "BizUplift REST API — Node.js + Express + MongoDB Atlas",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node local-server.js",
     "dev": "nodemon server.js",
     "seed": "node src/utils/seedData.js"
   },
